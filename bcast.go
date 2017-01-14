@@ -102,19 +102,12 @@ func (r *Group) BroadcastFor(timeout time.Duration) {
 			default: // receive a payload and broadcast it
 				for _, member := range r.Members() {
 					if received.sender != member { // not return broadcast to sender
-
-						/*
-							select {
-							case member <- received.payload:
-								fmt.Println("sent message", received.payload)
-							default:
-								fmt.Println("no message sent")
-							}
-						*/
-						go func(out chan interface{}, received *Message) { // non blocking
-							out <- received.payload
-						}(member, &received)
-
+						select {
+						case member <- received.payload:
+							//fmt.Println("sent message", received.payload)
+						default:
+							//fmt.Println("no message sent")
+						}
 					}
 				}
 			}
@@ -140,18 +133,12 @@ func (r *Group) Broadcast() {
 			default: // receive a payload and broadcast it
 				for _, member := range r.Members() {
 					if received.sender != member { // not return broadcast to sender
-
-						/*
-							select {
-							case member <- received.payload:
-								//fmt.Println("sent message", received.payload)
-							default:
-								//fmt.Println("no message sent")
-							}
-						*/
-						go func(out chan interface{}, received *Message) { // non blocking
-							out <- received.payload
-						}(member, &received)
+						select {
+						case member <- received.payload:
+							//fmt.Println("sent message", received.payload)
+						default:
+							//fmt.Println("no message sent")
+						}
 					}
 				}
 			}

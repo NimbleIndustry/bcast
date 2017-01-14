@@ -1,6 +1,8 @@
 bcast package for Go
 ====================
 
+NOTE: This library is not suitable for high volume messaging. Tests are currently failing.
+
 Broadcasting on a set of channels in Go. Go channels offer different usage patterns but not ready to use broadcast pattern.
 This library solves the problem in direct way. Each routine keeps member structure with own input channel and single for all
 members output channel. Central dispatcher accepts broadcasts and resend them to all members.
